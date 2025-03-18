@@ -5,10 +5,10 @@ const roleCheck = require('../middlewares/roleCheck');
 const userController = require('../controllers/userController');
 
 //login
-router.post('/login', userController.loginUser);
+router.post('/login', [auth, roleCheck(['user'])], userController.loginUser);
 
 // Registrar usuario (Público)
-router.post('/register', userController.registrarUsuario);
+router.post('/register', [auth, roleCheck(['user'])], userController.registrarUsuario);
 
 // Obtener todos los usuarios (Solo administrador)
 router.get('/', [auth, roleCheck(['admin'])], userController.obtenerUsuarios);
